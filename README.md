@@ -109,7 +109,18 @@ Starter-ийн `assertNotNull` ба `assertTrue(муж)` шалгалтууды�
 
 ### C1 — Гараар хийсэн мутант
 
+`scholarship()`-ийн мөр 52: `gpa >= 3.8` → `gpa > 3.8` болгож гараар өөрчилсөн (`src/main`).
+
+`mvn test` → `results/mvn-test-manual-mutant.txt`:
+
+- **Унасан тест:** `ScholarshipCalculatorTest.scholarship_thresholdBoundaries` (тестийн файлын мөр 90)
+- **Алдааны мөр:** `expected: <100> but was: <70>` — `scholarship(3.8, 15, false)` нь 3.8 яг босгон дээр байхад `gpa > 3.8` нь худал болж, 70 буцаана.
+
+Дараа нь `git restore src/main/java/mn/edu/must/sqat/ScholarshipCalculator.java`-аар буцаасан (мөр 52 дахин `gpa >= 3.8`), commit хийгээгүй.
+
 ### C2 — Өөрийн equivalent мутант
+
+Мутант: `gpa()`-ийн `default: break;` → `default: total += 0; break;`. Энэ нь `total`-д 0 нэмдэг тул нийлбэр хэзээ ч өөрчлөгддөггүй (`total` нь +0.0-ээс эхэлж, сөрөг утга авдаггүй), тиймээс буцаах утга бүх оролтод ижил хэвээр байна. Гүйцэтгэлийн зан төлөв ижил тул ямар ч тест энэ мутантыг алж чадахгүй, ийм мутант equivalent гэж үздэг.
 
 ---
 
