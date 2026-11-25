@@ -53,7 +53,7 @@ PIT тайлангийн 46 SURVIVED мутантыг мөр мөрөөр нь �
 | 25 | changed conditional boundary; removed conditional (true, false); replaced return value with `""` | 4 | Тест дутуу | Энэ өөрчлөлт 70-ийн үр дүнг өөрчилдөг тул тест дутуу. Арга хэмжээ: `letterGrade(70)` = `"C"`, `letterGrade(69.99)` = `"D"` (B1, B2). |
 | 26 | changed conditional boundary; removed conditional (true, false); replaced return value with `""` | 4 | Тест дутуу | Энэ өөрчлөлт 60-ийн үр дүнг өөрчилдөг тул тест дутуу. Арга хэмжээ: `letterGrade(60)` = `"D"`, `letterGrade(59.99)` = `"F"` (B1, B2). |
 | 27 | replaced return value with `""` (`return "F"`) | 1 | Тест дутуу | Энэ өөрчлөлт F үсгийн утгыг хоосон мөр болгодог тул тест дутуу; одоогийн тест `assertNotNull`-аар шалгадаг. Арга хэмжээ: `assertEquals("F", letterGrade(30))` (B1). |
-| 36 | changed switch default (default-ийг эхэнд байрлуулсан) | 1 | **Equivalent** | Зан төлөв ижил тул equivalent: `default` зөвхөн ямар ч case таарахгүй үед ажилладаг, бүх case `break`-тэй тул `default`-ийн байрлал гүйцэтгэлд нөлөөлдөггүй. Тест нэмэхгүй. |
+| 36 | changed switch default (default-ийг эхний case болгосон) | 1 | Тест дутуу | Энэ өөрчлөлт `F` дүнг (default) `A` case руу шилжүүлдэг тул gpa өөр болдог боловч starter тест зөвхөн муж шалгадаг. Арга хэмжээ: `gpa({40}) = 0.0` яг шалгах (B1). B1 дээр алагдсан (KILLED). |
 | 38 | replaced double addition with subtraction (`total += 3` → `-=`) | 1 | Тест дутуу | Энэ өөрчлөлт B үсгийн оноог хасдаг тул gpa өөр болдог боловч одоогийн тест зөвхөн муж (0–4) шалгадаг. Арга хэмжээ: gpa-ийн яг утгыг шалгах (B1). |
 | 40 | replaced double addition with subtraction (`total += 1` → `-=`) | 1 | Тест дутуу | Энэ өөрчлөлт D үсгийн оноог хасдаг тул gpa өөр болдог боловч одоогийн тест зөвхөн муж шалгадаг. Арга хэмжээ: gpa-ийн яг утгыг шалгах (B1). |
 | 44 | replaced double return with `0.0` (`return total / scores.length`) | 1 | Тест дутуу | Энэ өөрчлөлт gpa-ийн буцаах утгыг өөрчилдөг тул тест дутуу; одоогийн тест gpa-ийн яг утгыг шалгаагүй. Арга хэмжээ: gpa-ийн яг утгыг шалгах (B1). |
@@ -63,7 +63,7 @@ PIT тайлангийн 46 SURVIVED мутантыг мөр мөрөөр нь �
 | 53 | replaced int return with `0`; removed conditional (2 true, 2 false); changed conditional boundary (2) | 7 | Тест дутуу | Энэ өөрчлөлт 3.4/12 босгын үр дүнг өөрчилдөг тул тест дутуу. Арга хэмжээ: `scholarship(3.4, 12, false)` = 70 гэж яг шалгах (B2). |
 | 54 | replaced int return with `0`; removed conditional (true, false); changed conditional boundary | 4 | Тест дутуу | Энэ өөрчлөлт 3.0 босгын үр дүнг өөрчилдөг тул тест дутуу. Арга хэмжээ: `scholarship(3.0, 0, false)` = 50 гэж яг шалгах (B2). |
 
-**Дүгнэлт:** 46 амьд мутантын 45 нь тест дутуугаас үүдсэн. Зөвхөн мөр 36 нь equivalent гэж үндэслэгдэнэ.
+**Дүгнэлт:** 46 амьд мутант бүгд тест дутуугаас үүдсэн. Equivalent мутант байхгүй. Анхны ангилалд мөр 36-г equivalent гэж буруу үзсэн нь B1-ийн PIT дүнгээр батлагдсан: тэр мутант алагдсан.
 
 ---
 
@@ -87,9 +87,21 @@ Starter-ийн `assertNotNull` ба `assertTrue(муж)` шалгалтууды�
 | --- | --- | --- | --- | --- |
 | Эхлэл (Starter) | 63 | 17 | 27% | `results/pit-start.txt` |
 | B1 | 63 | 45 | 71% | `results/pit-B1.txt` |
-| B2 (эцсийн) |  |  |  | `results/pit-B2.txt` |
+| B2 (эцсийн) | 63 | 63 | 100% | `results/pit-B2.txt` |
 
 ### B2 — Зааг утгын тестүүд нэмэх
+
+Үлдсэн 18 амьд мутантыг алах зааг тестүүд нэмсэн:
+
+- **letterGrade:** 90/89.99, 80/79.99, 70/69.99, 60/59.99, 0 ба 100, `-0.01` ба `100.01` (exception).
+- **gpa:** яг 4.0 (`{100}`) ба 0.0 (`{0}`).
+- **scholarship:** босгын зааг (3.8/15, 3.8/14, 3.79/15, 3.4/12, 3.4/11, 3.39/12, 3.0/0, 2.99/20), оролтын хязгаар (gpa 0, 4; кредит 0), gpa `-0.1` exception.
+
+`mvn test` → **Tests run: 11, Failures: 0**. PIT: **63 mutations, Killed 63 (100%)** — `results/pit-B2.txt`.
+
+**Эцсийн PIT тайлан:**
+
+![Final PIT report: Line 25/25, Mutation 63/63, Test Strength 63/63](images/pit-final.png)
 
 ---
 
