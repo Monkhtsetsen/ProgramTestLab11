@@ -8,14 +8,16 @@
 Төслийг **WSL2 (Ubuntu)** дээр ажиллуулсан (`/mnt/d/projects/ProgramTestLab11`). `pom.xml`-д `maven.compiler.release=17`, JUnit 5.10.2, JaCoCo 0.8.12, PIT (`pitest-maven` 1.16.1, `pitest-junit5-plugin` 1.2.1), мутаторын багц `STRONGER`.
 
 ```
-$ java -version
-openjdk version "25.0.5.1" 2026-11-17
-OpenJDK Runtime Environment (build 25.0.5.1+2-1-26.04.1-Ubuntu)
-OpenJDK 64-Bit Server VM (build 25.0.5.1+2-1-26.04.1-Ubuntu, mixed mode, sharing)
+$ java --version
+openjdk 17.0.21.1 2026-11-17
+OpenJDK Runtime Environment (build 17.0.21.1+2-1-26.04.1-Ubuntu)
+OpenJDK 64-Bit Server VM (build 17.0.21.1+2-1-26.04.1-Ubuntu, mixed mode, sharing)
 
 $ mvn --version
 Apache Maven 3.9.9 (8e8579a9e76f7d015ee5ec7bfcdc97d260186937)
-Java version: 25.0.5.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-25-openjdk-amd64
+Maven home: /mnt/c/Program Files/apache-maven-3.9.9-bin/apache-maven-3.9.9
+Java version: 17.0.21.1, vendor: Ubuntu, runtime: /usr/lib/jvm/java-17-openjdk-amd64
+Default locale: en, platform encoding: UTF-8
 OS name: "linux", version: "6.6.114.1-microsoft-standard-wsl2", arch: "amd64", family: "unix"
 ```
 
@@ -125,5 +127,7 @@ Starter-ийн `assertNotNull` ба `assertTrue(муж)` шалгалтууды�
 ---
 
 ## Дүгнэлт
+
+Хамралт (coverage) нь кодын мөр эсвэл салаа тестээр гүйцэтгэгдсэн эсэхийг л хэмждэг, харин mutation score нь тестүүд кодын жижиг өөрчлөлтийг илрүүлж чадах эсэхийг шалгадаг. Starter тестийн багц Line 100% ба Branch 38/41 гэсэн сайн хамралттай байсан ч 63 мутантын зөвхөн 17-г (27%) алсан, учир нь assertion-ууд сул байв. Assertion-уудыг яг утгатай болгож (B1), заагийн тестүүд нэмснээр (B2) бүх 63 мутант алагдаж, mutation coverage 100% болсон. Хамгийн чухал сургамж нь тестээр гүйцэтгэгдэж байгаа ч утгыг нь шалгаагүй код батлагдсан гэж үзэж болохгүй. Гараар хийсэн мутант (C1) нь `gpa >= 3.8` → `gpa > 3.8` гэсэн жижиг өөрчлөлтийг зөвхөн B2-ийн босгын тест барьснаар үүнийг харуулсан. AI-аар тест бичүүлэхэд код бүрийг дуудсан ч сул assertion бүхий тест маш амархан хамралт өгдөг тул хамралтаар итгэх нь аюултай. Иймд AI-ийн тестийг mutation score-оор шалгаж, амьд үлдсэн мутант бүрийг гараар ангилах нь тестийн чанарыг баталгаажуулах найдвартай арга юм. Энэ лабд мөр 36-ийн мутантыг анх equivalent гэж буруу ангилж байсан нь PIT-ийн дүнгээр засагдсан: тэр мутант үнэндээ тест дутуугаас үүдсэн байсан.
 
 ---
